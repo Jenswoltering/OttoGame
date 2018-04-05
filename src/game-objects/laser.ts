@@ -1,6 +1,6 @@
 export class Laser extends Phaser.Sprite {
     game: Phaser.Game;
-    private gewicht: number = null;
+    public gewicht: number = null;
     private spawnPoints: number[] = null;
 
     constructor(game: Phaser.Game, gewicht: number) {
