@@ -1,6 +1,6 @@
 import * as Assets from '../assets';
 
-export default class Title extends Phaser.State {
+export default class SpielScreen extends Phaser.State {
     private backgroundTemplateSprite: Phaser.Sprite = null;
     private googleFontText: Phaser.Text = null;
     private localFontText: Phaser.Text = null;
