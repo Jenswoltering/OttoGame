@@ -62,7 +62,7 @@ export default class Title extends Phaser.State {
         this.backgroundTemplateSprite.events.onInputDown.add(() => {
             this.sfxAudiosprite.play(Phaser.ArrayUtils.getRandomItem(this.sfxLaserSounds));
         });
-
+        // Hallo Phil
         this.game.camera.flash(0x000000, 1000);
     }
 }
