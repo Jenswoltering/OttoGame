@@ -16,7 +16,7 @@ export default class Title extends Phaser.State {
         this.backgroundTemplateSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Images.ImagesBackgroundTemplate.getName());
         this.backgroundTemplateSprite.anchor.setTo(0.5);
 
-        this.googleFontText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, 'Google Web Fonts', {
+        this.googleFontText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, 'Hallo peter', {
             font: '50px ' + Assets.GoogleWebFonts.Barrio
         });
         this.googleFontText.anchor.setTo(0.5);
