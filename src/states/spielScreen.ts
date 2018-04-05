@@ -13,7 +13,6 @@ export default class SpielScreen extends Phaser.State {
     public update(): void {
        // hier spaeter ueberpruefung ob tasten gedrueckt werden
        // oder alles was sich bewegen/veraendern soll
-
-        // TEST       
+       // TEST 2
       }
 }
