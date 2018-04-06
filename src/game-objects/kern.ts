@@ -1,5 +1,6 @@
 export class Kern extends Phaser.Sprite {
     game: Phaser.Game;
+    private leben: number = 10;
 
     constructor(game: Phaser.Game, x: number, y: number) {
         super(game, x, y);
@@ -18,5 +19,11 @@ export class Kern extends Phaser.Sprite {
         texture = kernGraphic.generateTexture();
         kernGraphic.destroy();
         return texture;
+    }
+    public getLeben(): number {
+        return this.leben;
+    }
+    public reduzierteLeben(): void {
+        this.leben -= 1;
     }
 }

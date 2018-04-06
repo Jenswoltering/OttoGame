@@ -6,6 +6,12 @@ export class Schild extends Phaser.Sprite {
         super(game, x, y);
         this.game = game;
         this.texture = this.zeichneSchild();
+        this.pivot.y = 20;
+        this.game.physics.p2.enableBody(this, false);
+        this.body.clearShapes();
+        this.body.addRectangle(60, 5, 0, -20);
+        this.body.updateCollisionMask(0, 0, 0, 0);
+        this.body.kinematic = true;
         // this.game.physics.p2.enable(this, true);
         // this.addChild(this.zeichneSchild2());
         // this.anchor.set(0.5, 0.5);
