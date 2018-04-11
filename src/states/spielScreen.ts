@@ -61,6 +61,8 @@ export default class SpielScreen extends Phaser.State {
         this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY );
         this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild2.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
+        this.schilde.add(this.schild1);
+        this.schilde.add(this.schild2);
         // this.schild.pivot.y = 20;
         // this.game.physics.p2.enableBody(this.schild, true);
         // this.schild.body.clearShapes();
@@ -99,6 +101,11 @@ export default class SpielScreen extends Phaser.State {
             this.lebenText.setText('Game Over');
         }
         kern.reduzierteLeben();
+        this.schilde.forEachAlive(this.updateSchildGroesse, this);
+        // this.schild1.reduziereGroesse();
+        // this.schild1.body.setCollisionGroup(this.schildCollisionGroup);
+        // this.schild2.reduziereGroesse();
+        // this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
         console.log(kern.getLeben());
         body2.sprite.kill();
         console.log(body1.sprite.alive);
@@ -138,13 +145,19 @@ export default class SpielScreen extends Phaser.State {
     private moveLaser(laser: Laser): void {
         this.accelerateToObject(laser, this.kernSpritesheet, laser.gewicht);
     }
+    private updateSchildGroesse(schild: Schild): void {
+        schild.reduziereGroesse();
+        schild.body.setCollisionGroup(this.schildCollisionGroup);
+
+    }
     private erstelleLaser(anzahl: number): void {
         for (let index = 0; index < anzahl; index++) {
             let neuerLaser = new Laser(this.game, Math.random() * 20 + 1);
             this.game.physics.p2.enable(neuerLaser, false);
             neuerLaser.body.setCollisionGroup(this.laserCollisionGroup);
             neuerLaser.body.collides([this.schildCollisionGroup, this.kernCollisionGroup]);
-            this.laserSprites.add(neuerLaser);        }
+            this.laserSprites.add(neuerLaser);
+        }
     }
     private accelerateToObject(obj1, obj2, speed) {
         if (obj1 !== 'undefined') {
