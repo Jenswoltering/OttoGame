@@ -34,6 +34,7 @@ export default class SpielScreen extends Phaser.State {
         this.roterHintergrund = this.game.add.graphics(0, 0);
         this.roterHintergrund.beginFill(0xFA5858);
         this.roterHintergrund.drawRect(0, 0, this.game.width, this.game.height);
+        //  this.roterHintergrund.blendMode = PIXI.blendModes.COLOR_BURN;
         this.roterHintergrund.blendMode = PIXI.blendModes.COLOR_BURN;
         this.roterHintergrund.alpha = 0;
         this.laserSprites = this.game.add.group();
@@ -96,20 +97,16 @@ export default class SpielScreen extends Phaser.State {
         console.log(body1);
         let kern = body1.sprite as Kern;
         if (kern.getLeben() !== 0 ) {
+            kern.reduzierteLeben();
             this.lebenText.setText(kern.getLeben().toString());
         } else {
             this.lebenText.setText('Game Over');
         }
-        kern.reduzierteLeben();
-        this.schilde.forEachAlive(this.updateSchildGroesse, this);
-        // this.schild1.reduziereGroesse();
-        // this.schild1.body.setCollisionGroup(this.schildCollisionGroup);
-        // this.schild2.reduziereGroesse();
-        // this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
+        // this.schilde.forEachAlive(this.updateSchildGroesse, this);
         console.log(kern.getLeben());
         body2.sprite.kill();
         console.log(body1.sprite.alive);
-        this.game.camera.flash (0xFFFFFF, 8000);
+        this.game.camera.flash (0xFFFFFF, 500);
         this.roterHintergrund.alpha += 0.1;
 
     }
@@ -137,8 +134,11 @@ export default class SpielScreen extends Phaser.State {
             this.schild2.body.rotation += 0.1;
         }
        this.laserSprites.forEachAlive(this.moveLaser, this);
-       if (this.laserSprites.countLiving() <= 4) {
+       if (this.laserSprites.countLiving() <= 7) {
             this.runde += 1;
+            if (this.runde > 2) {
+                this.schilde.forEachAlive(this.updateSchildGroesse, this);
+             }
             this.erstelleLaser(this.runde * 4);
        }
     }
