@@ -7,7 +7,7 @@ export default class Preloader extends Phaser.State {
 
     public preload(): void {
         // Setup your loading screen and preload sprite (if you want a loading progress indicator) here
-
+        this.game.stage.backgroundColor = '#A9A9A9';
         this.preloadBarSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Atlases.AtlasesPreloadSpritesArray.getName(), Assets.Atlases.AtlasesPreloadSpritesArray.Frames.PreloadBar);
         // this.preloadBarSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Atlases.AtlasesPreloadSpritesHash.getName(), Assets.Atlases.AtlasesPreloadSpritesHash.Frames.PreloadBar);
         // this.preloadBarSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Atlases.AtlasesPreloadSpritesXml.getName(), Assets.Atlases.AtlasesPreloadSpritesXml.Frames.PreloadBar);
@@ -30,7 +30,7 @@ export default class Preloader extends Phaser.State {
 
     private startGame(): void {
         this.game.camera.onFadeComplete.addOnce(this.loadTitle, this);
-        this.game.camera.fade(0x000000, 1000);
+        this.game.camera.fade(0xFFFFFF, 1000);
     }
 
     private loadTitle(): void {

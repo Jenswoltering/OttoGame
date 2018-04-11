@@ -1,6 +1,11 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
 export namespace Images {
+    export class AtlasesPreloadSpritesArray2 {
+        static getName(): string { return 'preload_sprites_array2'; }
+
+        static getPNG(): string { return require('assets/atlases/preload_sprites_array2.png'); }
+    }
     export class ImagesBackgroundTemplate {
         static getName(): string { return 'background_template'; }
 
