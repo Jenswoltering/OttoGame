@@ -17,6 +17,7 @@ export default class SpielScreen extends Phaser.State {
     private runde: number = 0;
     private wasd: any;
     private lebenText: Phaser.Text = null;
+    public roterHintergrund: Phaser.Graphics;
 
     public create(): void {
         this.steuerung = this.game.input.keyboard.createCursorKeys();
@@ -29,7 +30,12 @@ export default class SpielScreen extends Phaser.State {
         // Hier das Spielsetup initialisieren
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.setImpactEvents(true);
-        this.game.stage.backgroundColor = '#736357';
+        this.game.stage.backgroundColor = '#3CB371'; // grüner Starthintergrund
+        this.roterHintergrund = this.game.add.graphics(0, 0);
+        this.roterHintergrund.beginFill(0xFA5858);
+        this.roterHintergrund.drawRect(0, 0, this.game.width, this.game.height);
+        this.roterHintergrund.blendMode = PIXI.blendModes.COLOR_BURN;
+        this.roterHintergrund.alpha = 0;
         this.laserSprites = this.game.add.group();
         this.schilde = this.game.add.group();
         this.schildCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -96,6 +102,8 @@ export default class SpielScreen extends Phaser.State {
         console.log(kern.getLeben());
         body2.sprite.kill();
         console.log(body1.sprite.alive);
+        this.game.camera.flash (0xFFFFFF, 8000);
+        this.roterHintergrund.alpha += 0.1;
 
     }
     public update(): void {
@@ -136,9 +144,7 @@ export default class SpielScreen extends Phaser.State {
             this.game.physics.p2.enable(neuerLaser, false);
             neuerLaser.body.setCollisionGroup(this.laserCollisionGroup);
             neuerLaser.body.collides([this.schildCollisionGroup, this.kernCollisionGroup]);
-            this.laserSprites.add(neuerLaser);
-            this.game.stage.backgroundColor = Phaser.Color.getRandomColor();
-        }
+            this.laserSprites.add(neuerLaser);        }
     }
     private accelerateToObject(obj1, obj2, speed) {
         if (obj1 !== 'undefined') {

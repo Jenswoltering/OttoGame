@@ -66,7 +66,8 @@ export class Laser extends Phaser.Sprite {
         let texture: Phaser.RenderTexture;
         let laserGraphic = this.game.add.graphics(0, 0);
         laserGraphic.lineStyle(0, 0xFFFFFF, 1);
-        laserGraphic.beginFill(Phaser.Color.getRandomColor());
+        // laserGraphic.beginFill(Phaser.Color.getRandomColor());
+        laserGraphic.beginFill(0xFFFFFF);
         laserGraphic.drawCircle(this.game.world.centerX, this.game.world.centerY, 5);
         texture = laserGraphic.generateTexture();
         laserGraphic.destroy();

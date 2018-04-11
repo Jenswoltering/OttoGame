@@ -25,5 +25,6 @@ export class Kern extends Phaser.Sprite {
     }
     public reduzierteLeben(): void {
         this.leben -= 1;
+        // this.game.stage.backgroundColor = Phaser.Color.getRandomColor();
     }
 }
