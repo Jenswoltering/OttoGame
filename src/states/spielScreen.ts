@@ -57,10 +57,10 @@ export default class SpielScreen extends Phaser.State {
         this.kernSpritesheet.body.setCollisionGroup(this.kernCollisionGroup);
         this.kernSpritesheet.body.collides(this.laserCollisionGroup, this.kernGetroffen, this);
         // this.schilde.add(new Schild(this.game, this.game.world.centerX , this.game.world.centerY));
-        this.schild1 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0xff66ff);
+        this.schild1 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0x66e0ff);
         this.schild1.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild1.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
-        this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0xff944d);
+        this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0xd966ff);
         this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild2.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
         this.schilde.add(this.schild1);

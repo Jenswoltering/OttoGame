@@ -16,6 +16,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/GameOverMeldung.png'); }
     }
+    export class ImagesKern {
+        static getName(): string { return 'Kern'; }
+
+        static getPNG(): string { return require('assets/images/Kern.png'); }
+    }
     export class ImagesOkto {
         static getName(): string { return 'Okto'; }
 

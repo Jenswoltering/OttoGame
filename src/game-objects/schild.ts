@@ -4,6 +4,7 @@ export class Schild extends Phaser.Sprite {
     private breite: number = 40;
     private arcGroesse: number = 0.5;
     private farbe: number;
+    private linienBreiteDerSchilder: number = 2.5;
 
     constructor(game: Phaser.Game, x: number, y: number, farbe: number) {
         super(game, x, y);
@@ -11,9 +12,9 @@ export class Schild extends Phaser.Sprite {
         this.farbe = farbe;
         this.texture = this.zeichneSchild(this.breite);
         this.game.physics.p2.enableBody(this, false);
-        this.pivot.y = 25;
+        this.pivot.y = 30;
         this.body.clearShapes();
-        this.body.addRectangle(this.breite, 5, 0, -25);
+        this.body.addRectangle(this.breite, 5, 0, -28);
         // this.body.addPolygon ( {}, 9, 108, 32, 107, 21, 164, 0, 164, 44, 51, 89, 17, 76, 50, 32, 107, 9, 108, 89, 17, 147, 0, 111, 30, 76, 50, 147, 0, 181, 0, 248, 22, 219, 31, 160, 20, 248, 22, 290, 58, 255, 53, 219, 31, 290, 58, 316, 101, 295, 106, 255, 53, 316, 101, 327, 164, 307, 164, 295, 106);
         // let arcShape = [[-20, -20], [-0, -30], [20, -20]];
         // this.body.addShape (arcShape, 0 , 0);
@@ -33,9 +34,10 @@ export class Schild extends Phaser.Sprite {
         let texture: Phaser.RenderTexture;
         let schildGraphic = this.game.add.graphics(0, 0);
         schildGraphic.beginFill(0xFFFFFF, 1);
-        schildGraphic.lineStyle(3, this.farbe, .8);
+        schildGraphic.lineStyle(this.linienBreiteDerSchilder, this.farbe, .5);
         schildGraphic.arc(0, 0, 22, Phaser.Math.PI2 / 2 + this.arcGroesse, Phaser.Math.PI2 - this.arcGroesse, false); // radianwert: "4,8" als mittelpunkt. der vierte und fünte wert brauchen den gleichen abstand von 4,8
         this.arcGroesse += 0.15;
+        this.linienBreiteDerSchilder -= 0.4;
         // schildGraphic.drawCircle(0, 0, 44);
         // kernGraphic.arc(this.game.world.centerX, this.game.world.centerY, 20, 0, Math.PI * 1.6, false);
         // schildGraphic.drawRect(this.game.world.centerX, this.game.world.centerY, breite, 5);
@@ -52,7 +54,7 @@ export class Schild extends Phaser.Sprite {
         this.breite -= 5;
         this.texture = this.zeichneSchild(this.breite);
         this.body.clearShapes();
-        this.body.addRectangle(this.breite, 5, 0, -20);
+        this.body.addRectangle(this.breite, 5, 0, -28);
         this.body.updateCollisionMask(0, 0, 0, 0);
         // arc anpassen
         // let schildGraphic = this.game.add.graphics(0, 0);
