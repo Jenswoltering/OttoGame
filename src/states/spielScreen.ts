@@ -18,6 +18,7 @@ export default class SpielScreen extends Phaser.State {
     private wasd: any;
     private lebenText: Phaser.Text = null;
     public roterHintergrund: Phaser.Graphics;
+    public button;
 
     public create(): void {
         this.steuerung = this.game.input.keyboard.createCursorKeys();
@@ -50,8 +51,8 @@ export default class SpielScreen extends Phaser.State {
         };
         this.lebenText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, this.kernSpritesheet.getLeben().toString(), style);
         this.lebenText.anchor.setTo(0.58, 0.40);
-         this.game.physics.p2.enable(this.kernSpritesheet, false);
-         this.kernSpritesheet.body.setCircle(10);
+        this.game.physics.p2.enable(this.kernSpritesheet, false);
+        this.kernSpritesheet.body.setCircle(10);
         this.kernSpritesheet.body.kinematic = true;
         this.kernSpritesheet.body.setCollisionGroup(this.kernCollisionGroup);
         this.kernSpritesheet.body.collides(this.laserCollisionGroup, this.kernGetroffen, this);
@@ -93,22 +94,31 @@ export default class SpielScreen extends Phaser.State {
         console.log(body2.sprite.alive);
 
     }
+
     public kernGetroffen(body1:  Phaser.Physics.P2.Body, body2:  Phaser.Physics.P2.Body): void {
         console.log(body1);
         let kern = body1.sprite as Kern;
-        if (kern.getLeben() !== 0 ) {
+        if (kern.getLeben() !== 1 ) {
             kern.reduzierteLeben();
             this.lebenText.setText(kern.getLeben().toString());
-        } else {
-            this.lebenText.setText('Game Over');
-        }
-        // this.schilde.forEachAlive(this.updateSchildGroesse, this);
-        console.log(kern.getLeben());
-        body2.sprite.kill();
-        console.log(body1.sprite.alive);
-        this.game.camera.flash (0xFFFFFF, 500);
-        this.roterHintergrund.alpha += 0.1;
+            // this.schilde.forEachAlive(this.updateSchildGroesse, this);
+            console.log(kern.getLeben());
+            body2.sprite.kill();
+            console.log(body1.sprite.alive);
+            this.game.camera.flash (0xFFFFFF, 500);
+            this.roterHintergrund.alpha += 0.1;
 
+        } else {
+            this.game.add.tileSprite(this.game.world.centerX - 216, this.game.world.centerY - 99, 432, 199, Assets.Images.ImagesGameOverMeldung.getName());
+            this.button = this.game.add.button(this.game.world.centerX - 40, this.game.world.centerY + 7, Assets.Images.ImagesOkto.getName(), this.neuStarten, this);
+        }
+    }
+    public neuStarten () {
+        this.game.camera.onFadeComplete.addOnce(this.loadTitle, this);
+        this.game.camera.fade(0xFFFFFF, 1000);
+    }
+    private loadTitle(): void {
+        this.game.state.start('spielScreen');
     }
     public update(): void {
        // hier spaeter ueberpruefung ob tasten gedrueckt werden

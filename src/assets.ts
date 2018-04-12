@@ -11,6 +11,21 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/background_template.png'); }
     }
+    export class ImagesGameOverMeldung {
+        static getName(): string { return 'GameOverMeldung'; }
+
+        static getPNG(): string { return require('assets/images/GameOverMeldung.png'); }
+    }
+    export class ImagesOkto {
+        static getName(): string { return 'Okto'; }
+
+        static getPNG(): string { return require('assets/images/Okto.png'); }
+    }
+    export class Kern {
+        static getName(): string { return 'Kern'; }
+
+        static getPNG(): string { return require('assets/Kern.png'); }
+    }
 }
 
 export namespace Spritesheets {

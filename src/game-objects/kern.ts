@@ -1,3 +1,5 @@
+// import * as Assets from '../assets';
+
 export class Kern extends Phaser.Sprite {
     game: Phaser.Game;
     private leben: number = 10;
@@ -11,6 +13,7 @@ export class Kern extends Phaser.Sprite {
     }
 
     private zeichneKern(): Phaser.RenderTexture {
+        // this.game.add.tileSprite(this.game.world.centerX - 216, this.game.world.centerY - 99, 432, 199, Assets.Images.ImagesKern.getName());
         let texture: Phaser.RenderTexture;
         let kernGraphic = this.game.add.graphics(0, 0);
         kernGraphic.lineStyle(2, 0xFFFFFF, 1);
