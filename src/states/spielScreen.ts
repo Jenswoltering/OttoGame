@@ -2,7 +2,7 @@ import * as Assets from '../assets';
 import { Kern } from '../game-objects/kern';
 import { Laser } from '../game-objects';
 import { Schild } from '../game-objects';
-import OttoLib  from '../vendor/dist/lib/ottoLib';
+import OttoLib  from '../olib/dists/lib/ottoLib';
 
 export default class SpielScreen extends Phaser.State {
     // Hier Variablen fuer Sprites einfuegen
