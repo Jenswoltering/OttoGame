@@ -2,9 +2,11 @@ import * as Assets from '../assets';
 import { Kern } from '../game-objects/kern';
 import { Laser } from '../game-objects';
 import { Schild } from '../game-objects';
+import OttoLib  from '../vendor/dist/lib/ottoLib';
 
 export default class SpielScreen extends Phaser.State {
     // Hier Variablen fuer Sprites einfuegen
+    private ottoLib: OttoLib = null;
     private kernSpritesheet: Kern = null;
     private laserSprites: Phaser.Group = null;
     private schilde: Phaser.Group = null;
@@ -21,6 +23,9 @@ export default class SpielScreen extends Phaser.State {
     public button;
 
     public create(): void {
+        this.ottoLib = new OttoLib('2345');
+        this.ottoLib.start('2345');
+        this.ottoLib.onJoystickMove.subscribe(j => console.log(`Sequence: ${j.id}`));
         this.steuerung = this.game.input.keyboard.createCursorKeys();
         this.wasd = {
             up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
