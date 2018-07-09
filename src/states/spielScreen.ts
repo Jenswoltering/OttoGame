@@ -77,6 +77,7 @@ export default class SpielScreen extends Phaser.State {
         this.schild1.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild1.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
         this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0xd966ff);
+        this.schild2.angle = -90;
         this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild2.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
         this.schilde.add(this.schild1);
@@ -155,9 +156,11 @@ export default class SpielScreen extends Phaser.State {
 
         if (this.wasd.left.isDown) {
             this.schild2.body.rotation -= 0.1;
+            console.log( this.schild2.body.rotation);
         }
         else if (this.wasd.right.isDown) {
             this.schild2.body.rotation += 0.1;
+            console.log( this.schild2.body.rotation);
         }
        this.laserSprites.forEachAlive(this.moveLaser, this);
        if (this.laserSprites.countLiving() <= 7) {
@@ -178,7 +181,7 @@ export default class SpielScreen extends Phaser.State {
     }
     private erstelleLaser(anzahl: number): void {
         for (let index = 0; index < anzahl; index++) {
-            let neuerLaser = new Laser(this.game, Math.random() * 10 + 1); // wieviele Laser werden erstellt
+            let neuerLaser = new Laser(this.game, Math.random() * 1 + 1); // wieviele Laser werden erstellt
             this.game.physics.p2.enable(neuerLaser, false);
             neuerLaser.body.setCollisionGroup(this.laserCollisionGroup);
             neuerLaser.body.collides([this.schildCollisionGroup, this.kernCollisionGroup]);
