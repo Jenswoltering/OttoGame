@@ -11,7 +11,7 @@ export class Schild extends Phaser.Sprite {
         this.game = game;
         this.farbe = farbe;
         this.texture = this.zeichneSchild(this.breite);
-        this.game.physics.p2.enableBody(this, false);
+        this.game.physics.p2.enableBody(this, true);
         this.pivot.y = 30;
         this.body.clearShapes();
         this.body.addRectangle(this.breite, 5, 0, -28);
@@ -35,7 +35,7 @@ export class Schild extends Phaser.Sprite {
         let schildGraphic = this.game.add.graphics(0, 0);
         schildGraphic.beginFill(0xFFFFFF, 1);
         schildGraphic.lineStyle(this.linienBreiteDerSchilder, this.farbe, .5);
-        schildGraphic.arc(0, 0, 22, Phaser.Math.PI2 / 2 + this.arcGroesse, Phaser.Math.PI2 - this.arcGroesse, false); // radianwert: "4,8" als mittelpunkt. der vierte und fünte wert brauchen den gleichen abstand von 4,8
+        schildGraphic.arc(0, 0, 22, Phaser.Math.PI2 / 2 + this.arcGroesse, Phaser.Math.PI2 - this.arcGroesse, false);
         this.arcGroesse += 0.15;
         this.linienBreiteDerSchilder -= 0.4;
         // schildGraphic.drawCircle(0, 0, 44);

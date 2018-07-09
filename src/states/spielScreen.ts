@@ -25,6 +25,10 @@ export default class SpielScreen extends Phaser.State {
     public create(): void {
         this.ottoLib = new OttoLib('2345');
         this.ottoLib.start('2345');
+        this.ottoLib.newUserJoined.subscribe(user => {
+            console.log('vghjcvghnvghcghcghvfghxcghcghcxgfhchgcghcghchgcfgc');
+            console.log(user);
+        });
         this.ottoLib.onJoystickMove.subscribe(j => {
             console.log('move move');
             this.schild2.body.rotation += 0.1;
@@ -71,7 +75,7 @@ export default class SpielScreen extends Phaser.State {
         // this.schilde.add(new Schild(this.game, this.game.world.centerX , this.game.world.centerY));
         this.schild1 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0x66e0ff);
         this.schild1.body.setCollisionGroup(this.schildCollisionGroup);
-        this.schild1.body.collides(this.laserCollisionGroup, this.schildGetroffen, this); 
+        this.schild1.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
         this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0xd966ff);
         this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild2.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
