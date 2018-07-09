@@ -11361,9 +11361,10 @@ var Connection = /** @class */ (function () {
     Connection.prototype.listen = function (socket) {
         var _this = this;
         var joystick = new Joystick(1);
+        var self = this;
         socket.on("newUser", function () {
             var user = new UserClient(socket);
-            this._connectionManger.eventmanager.dispatchNewClient(user);
+            self._connectionManger.eventmanager.dispatchNewClient(user);
         });
         socket.on("jsm", function (data) {
             return _this._connectionManger.eventmanager.dispatchJoystickMove(joystick);
