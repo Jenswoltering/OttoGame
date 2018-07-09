@@ -54,6 +54,9 @@
     "webpack": "3.10.0",
     "webpack-dev-server": "2.11.1",
     "webpack-synchronizable-shell-plugin": "0.0.6",
-    "xml2js": "0.4.19"
+    "xml2js": "0.4.19",
+    "@types/socket.io-client": "^1.4.32",
+    "socket.io-client": "^2.1.0",
+    "strongly-typed-events": "^1.4.3"
   }
 }

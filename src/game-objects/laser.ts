@@ -30,21 +30,21 @@ export class Laser extends Phaser.Sprite {
         switch (seite) {
             case 0: {
                 coords[0] = rndX;
-                coords[1] = 0 - this.game.rnd.integerInRange(0, 400);
+                coords[1] = 0 - this.game.rnd.integerInRange(0, 200);
                 break;
             }
             case 1: {
-                coords[0] = 0 - this.game.rnd.integerInRange(0, 400);
+                coords[0] = 0 - this.game.rnd.integerInRange(0, 200);
                 coords[1] = rndY;
                 break;
              }
             case 2: {
                 coords[0] = rndX;
-                coords[1] = this.game.height + this.game.rnd.integerInRange(0, 400);
+                coords[1] = this.game.height + this.game.rnd.integerInRange(0, 200);
                 break;
              }
             case 3: {
-                coords[0] = this.game.width + this.game.rnd.integerInRange(0, 400);
+                coords[0] = this.game.width + this.game.rnd.integerInRange(0, 200);
                 coords[1] = rndY;
                 break;
              }
@@ -66,7 +66,8 @@ export class Laser extends Phaser.Sprite {
         let texture: Phaser.RenderTexture;
         let laserGraphic = this.game.add.graphics(0, 0);
         laserGraphic.lineStyle(0, 0xFFFFFF, 1);
-        laserGraphic.beginFill(Phaser.Color.getRandomColor());
+        // laserGraphic.beginFill(Phaser.Color.getRandomColor());
+        laserGraphic.beginFill(0xFFFFFF);
         laserGraphic.drawCircle(this.game.world.centerX, this.game.world.centerY, 5);
         texture = laserGraphic.generateTexture();
         laserGraphic.destroy();

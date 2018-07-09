@@ -8,6 +8,7 @@ import SpielScreen from './states/spielScreen';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
 import * as GameObjects from './game-objects/';
+import * as OttoLib from './olib/dists/lib/';
 
 class App extends Phaser.Game {
     constructor(config: Phaser.IGameConfig) {

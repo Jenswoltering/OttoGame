@@ -1,10 +1,35 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
 export namespace Images {
+    export class AtlasesPreloadSpritesArray2 {
+        static getName(): string { return 'preload_sprites_array2'; }
+
+        static getPNG(): string { return require('assets/atlases/preload_sprites_array2.png'); }
+    }
     export class ImagesBackgroundTemplate {
         static getName(): string { return 'background_template'; }
 
         static getPNG(): string { return require('assets/images/background_template.png'); }
+    }
+    export class ImagesGameOverMeldung {
+        static getName(): string { return 'GameOverMeldung'; }
+
+        static getPNG(): string { return require('assets/images/GameOverMeldung.png'); }
+    }
+    export class ImagesKern {
+        static getName(): string { return 'Kern'; }
+
+        static getPNG(): string { return require('assets/images/Kern.png'); }
+    }
+    export class ImagesOkto {
+        static getName(): string { return 'Okto'; }
+
+        static getPNG(): string { return require('assets/images/Okto.png'); }
+    }
+    export class Kern {
+        static getName(): string { return 'Kern'; }
+
+        static getPNG(): string { return require('assets/Kern.png'); }
     }
 }
 

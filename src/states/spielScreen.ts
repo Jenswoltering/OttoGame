@@ -2,9 +2,11 @@ import * as Assets from '../assets';
 import { Kern } from '../game-objects/kern';
 import { Laser } from '../game-objects';
 import { Schild } from '../game-objects';
+import OttoLib  from '../olib/dists/lib/ottoLib';
 
 export default class SpielScreen extends Phaser.State {
     // Hier Variablen fuer Sprites einfuegen
+    private ottoLib: OttoLib = null;
     private kernSpritesheet: Kern = null;
     private laserSprites: Phaser.Group = null;
     private schilde: Phaser.Group = null;
@@ -17,9 +19,24 @@ export default class SpielScreen extends Phaser.State {
     private runde: number = 0;
     private wasd: any;
     private lebenText: Phaser.Text = null;
+    public roterHintergrund: Phaser.Graphics;
+    public button;
 
     public create(): void {
-        this.steuerung = this.game.input.keyboard.createCursorKeys();
+        this.ottoLib = new OttoLib('2345');
+        this.ottoLib.start('2345');
+        this.ottoLib.newUserJoined.subscribe(user => {
+            console.log('vghjcvghnvghcghcghvfghxcghcghcxgfhchgcghcghchgcfgc');
+            console.log(user);
+        });
+        this.ottoLib.onJoystickMove.subscribe(j => {
+            console.log('move move');
+            this.schild2.body.rotation += 0.1;
+            // else {
+            //     this.steuerung.down.isDown = false;
+            // }
+        });
+        this.steuerung = this.game.input.keyboard.createCursorKeys(); // Tasten verfügar machen
         this.wasd = {
             up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
             down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
@@ -29,32 +46,42 @@ export default class SpielScreen extends Phaser.State {
         // Hier das Spielsetup initialisieren
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.setImpactEvents(true);
-        this.game.stage.backgroundColor = '#736357';
+        this.game.stage.backgroundColor = '#3CB371'; // grüner Starthintergrund
+        this.roterHintergrund = this.game.add.graphics(0, 0);
+        this.roterHintergrund.beginFill(0xFA5858);
+        this.roterHintergrund.drawRect(0, 0, this.game.width, this.game.height);
+        this.roterHintergrund.blendMode = PIXI.blendModes.COLOR_BURN; // roter Hintergrund wird durchgeblendet
+        this.roterHintergrund.alpha = 0;
         this.laserSprites = this.game.add.group();
         this.schilde = this.game.add.group();
         this.schildCollisionGroup = this.game.physics.p2.createCollisionGroup();
         this.laserCollisionGroup = this.game.physics.p2.createCollisionGroup();
-        this.kernCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        this.kernCollisionGroup = this.game.physics.p2.createCollisionGroup(); // Schild,Laser,Kern können kollidieren
         this.kernSpritesheet = new Kern(this.game, this.game.world.centerX, this.game.world.centerY);
         let style: Phaser.PhaserTextStyle = {
             font: '12px Arial',
             fill: '#000000',
             align: 'center'
-        };
+        }; // Kern mit leerem Schriftfeld in der Mitte erstellen
         this.lebenText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, this.kernSpritesheet.getLeben().toString(), style);
-        this.lebenText.anchor.setTo(0.58, 0.40);
-         this.game.physics.p2.enable(this.kernSpritesheet, false);
-         this.kernSpritesheet.body.setCircle(10);
+        this.lebenText.anchor.setTo(0.58, 0.40); // Lebenstext in die Mitte schreiben
+        this.game.physics.p2.enable(this.kernSpritesheet, false);
+        this.kernSpritesheet.body.setCircle(10); // Kern hat unsichtbare Kreiskollisionsbox
         this.kernSpritesheet.body.kinematic = true;
         this.kernSpritesheet.body.setCollisionGroup(this.kernCollisionGroup);
-        this.kernSpritesheet.body.collides(this.laserCollisionGroup, this.kernGetroffen, this);
+        this.kernSpritesheet.body.collides(this.laserCollisionGroup, this.kernGetroffen, this); // kern kann kollidieren
+
+        // SCHILDE ERSTELLEN
         // this.schilde.add(new Schild(this.game, this.game.world.centerX , this.game.world.centerY));
-        this.schild1 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY );
+        this.schild1 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0x66e0ff);
         this.schild1.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild1.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
-        this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY );
+        this.schild2 = new Schild(this.game, this.game.world.centerX , this.game.world.centerY, 0xd966ff);
+        this.schild2.angle = -90;
         this.schild2.body.setCollisionGroup(this.schildCollisionGroup);
         this.schild2.body.collides(this.laserCollisionGroup, this.schildGetroffen, this);
+        this.schilde.add(this.schild1);
+        this.schilde.add(this.schild2);
         // this.schild.pivot.y = 20;
         // this.game.physics.p2.enableBody(this.schild, true);
         // this.schild.body.clearShapes();
@@ -84,19 +111,31 @@ export default class SpielScreen extends Phaser.State {
         console.log(body2.sprite.alive);
 
     }
+
     public kernGetroffen(body1:  Phaser.Physics.P2.Body, body2:  Phaser.Physics.P2.Body): void {
         console.log(body1);
         let kern = body1.sprite as Kern;
-        if (kern.getLeben() !== 0 ) {
+        if (kern.getLeben() !== 1 ) {
+            kern.reduzierteLeben();
             this.lebenText.setText(kern.getLeben().toString());
-        } else {
-            this.lebenText.setText('Game Over');
-        }
-        kern.reduzierteLeben();
-        console.log(kern.getLeben());
-        body2.sprite.kill();
-        console.log(body1.sprite.alive);
+            // this.schilde.forEachAlive(this.updateSchildGroesse, this);
+            console.log(kern.getLeben());
+            body2.sprite.kill();
+            console.log(body1.sprite.alive);
+            this.game.camera.flash (0xFFFFFF, 500);
+            this.roterHintergrund.alpha += 0.1;
 
+        } else {
+            this.game.add.tileSprite(this.game.world.centerX - 216, this.game.world.centerY - 99, 432, 199, Assets.Images.ImagesGameOverMeldung.getName());
+            this.button = this.game.add.button(this.game.world.centerX - 40, this.game.world.centerY + 7, Assets.Images.ImagesOkto.getName(), this.neuStarten, this);
+        }
+    }
+    public neuStarten () {
+        this.game.camera.onFadeComplete.addOnce(this.loadTitle, this);
+        this.game.camera.fade(0xFFFFFF, 1000);
+    }
+    private loadTitle(): void {
+        this.game.state.start('spielScreen');
     }
     public update(): void {
        // hier spaeter ueberpruefung ob tasten gedrueckt werden
@@ -117,27 +156,36 @@ export default class SpielScreen extends Phaser.State {
 
         if (this.wasd.left.isDown) {
             this.schild2.body.rotation -= 0.1;
+            console.log( this.schild2.body.rotation);
         }
         else if (this.wasd.right.isDown) {
             this.schild2.body.rotation += 0.1;
+            console.log( this.schild2.body.rotation);
         }
        this.laserSprites.forEachAlive(this.moveLaser, this);
-       if (this.laserSprites.countLiving() <= 4) {
+       if (this.laserSprites.countLiving() <= 7) {
             this.runde += 1;
-            this.erstelleLaser(this.runde * 4);
+            if (this.runde > 2) {
+                this.schilde.forEachAlive(this.updateSchildGroesse, this); // Schilde schrumpfen lassen
+             }
+            this.erstelleLaser(this.runde * 4); // neue Laser erstellen
        }
     }
     private moveLaser(laser: Laser): void {
         this.accelerateToObject(laser, this.kernSpritesheet, laser.gewicht);
     }
+    private updateSchildGroesse(schild: Schild): void {
+        schild.reduziereGroesse();
+        schild.body.setCollisionGroup(this.schildCollisionGroup);
+
+    }
     private erstelleLaser(anzahl: number): void {
         for (let index = 0; index < anzahl; index++) {
-            let neuerLaser = new Laser(this.game, Math.random() * 20 + 1);
+            let neuerLaser = new Laser(this.game, Math.random() * 1 + 1); // wieviele Laser werden erstellt
             this.game.physics.p2.enable(neuerLaser, false);
             neuerLaser.body.setCollisionGroup(this.laserCollisionGroup);
             neuerLaser.body.collides([this.schildCollisionGroup, this.kernCollisionGroup]);
             this.laserSprites.add(neuerLaser);
-            this.game.stage.backgroundColor = Phaser.Color.getRandomColor();
         }
     }
     private accelerateToObject(obj1, obj2, speed) {
