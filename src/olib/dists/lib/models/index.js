@@ -9,4 +9,5 @@ __export(require("./reward"));
 __export(require("./user"));
 __export(require("./room"));
 __export(require("./button"));
+__export(require("./userClient"));
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
 import { ISimpleEvent } from "strongly-typed-events";
-import { Joystick } from "../models";
+import { Joystick, UserClient } from "../models";
 export default class EventManager {
     private _onJoystickMove;
     private _onMoveUp;
@@ -10,7 +10,7 @@ export default class EventManager {
     constructor();
     onMoveUp(): ISimpleEvent<Joystick>;
     readonly onJoystickMove: ISimpleEvent<Joystick>;
-    readonly onNewClient: ISimpleEvent<number>;
+    readonly onNewClient: ISimpleEvent<UserClient>;
     readonly onMoveRight: ISimpleEvent<Joystick>;
     readonly onMoveLeft: ISimpleEvent<Joystick>;
     readonly onMoveDown: ISimpleEvent<Joystick>;
@@ -19,5 +19,5 @@ export default class EventManager {
     dispatchJoystickRight(joystick: Joystick): void;
     dispatchJoystickDown(joystick: Joystick): void;
     dispatchJoystickLeft(joystick: Joystick): void;
-    dispatchNewClient(clientID: number): void;
+    dispatchNewClient(userClient: UserClient): void;
 }

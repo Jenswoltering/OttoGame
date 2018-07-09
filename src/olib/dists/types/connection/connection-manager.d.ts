@@ -1,4 +1,4 @@
-import EventManager from '../events/event-manager';
+import EventManager from "../events/event-manager";
 export default class ConnectionManager {
     eventmanager: EventManager;
     private connection;

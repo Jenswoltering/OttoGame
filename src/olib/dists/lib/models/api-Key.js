@@ -7,7 +7,7 @@ var APIKey = /** @class */ (function () {
             this._room = this.getRoomID();
         }
         else {
-            this._room = '';
+            this._room = "";
         }
     }
     APIKey.prototype.isValid = function () {

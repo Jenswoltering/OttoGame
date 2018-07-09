@@ -1,4 +1,4 @@
-import ConnectionManager from './connection-manager';
+import ConnectionManager from "./connection-manager";
 export default class Connection {
     private _socket;
     private _connectionManger;

@@ -11319,29 +11319,56 @@ Manager: lib_4$1,
 Socket: lib_5$1
 });
 
+var Direction;
+(function (Direction) {
+    Direction[Direction["No"] = 0] = "No";
+    Direction[Direction["Up"] = 1] = "Up";
+    Direction[Direction["Down"] = 2] = "Down";
+    Direction[Direction["Left"] = 3] = "Left";
+    Direction[Direction["Right"] = 4] = "Right";
+})(Direction || (Direction = {}));
 var Joystick = /** @class */ (function () {
     function Joystick(id) {
         this.id = id;
+        this._polarX = 0;
+        this._polarY = 0;
+        this._direction = Direction.No;
     }
+    Joystick.prototype.update = function (radius, distance) {
+        // do something
+    };
     return Joystick;
+}());
+
+var UserClient = /** @class */ (function () {
+    function UserClient(socket) {
+        this.id = socket.id;
+    }
+    return UserClient;
 }());
 
 var Connection = /** @class */ (function () {
     function Connection(connectionManger) {
         this._connectionManger = connectionManger;
-        this.roomId = '';
+        this.roomId = "";
         var socketio = lib$2 || socketio_;
-        this._socket = socketio('https://ottoheroku.herokuapp.com');
+        this._socket = socketio("https://ottoheroku.herokuapp.com");
     }
     Connection.prototype.createRoom = function (roomId) {
-        this._socket.emit('create', roomId);
+        this._socket.emit("create", roomId);
         this.listen(this._socket);
     };
     Connection.prototype.listen = function (socket) {
         var _this = this;
         var joystick = new Joystick(1);
-        socket.on('jsm', function (data) { return _this._connectionManger.eventmanager.dispatchJoystickMove(joystick); });
-        socket.on('jss', function (data) { return console.log(data); });
+        socket.on("newUser", function () {
+            var user = new UserClient(socket);
+            this._connectionManger.eventmanager.dispatchNewClient(user);
+        });
+        socket.on("jsm", function (data) {
+            return _this._connectionManger.eventmanager.dispatchJoystickMove(joystick);
+        });
+        socket.on("jss", function (data) { return console.log(data); });
     };
     return Connection;
 }());
@@ -12262,7 +12289,7 @@ var EventManager = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    // Dispatch Methods 
+    // Dispatch Methods
     EventManager.prototype.dispatchJoystickMove = function (joystick) {
         this._onJoystickMove.dispatch(joystick);
     };
@@ -12278,8 +12305,8 @@ var EventManager = /** @class */ (function () {
     EventManager.prototype.dispatchJoystickLeft = function (joystick) {
         this._onMoveLeft.dispatch(joystick);
     };
-    EventManager.prototype.dispatchNewClient = function (clientID) {
-        this._onNewClient.dispatch(clientID);
+    EventManager.prototype.dispatchNewClient = function (userClient) {
+        this._onNewClient.dispatch(userClient);
     };
     return EventManager;
 }());
@@ -12300,7 +12327,7 @@ var APIKey = /** @class */ (function () {
             this._room = this.getRoomID();
         }
         else {
-            this._room = '';
+            this._room = "";
         }
     }
     APIKey.prototype.isValid = function () {

@@ -50,7 +50,7 @@ var EventManager = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    // Dispatch Methods 
+    // Dispatch Methods
     EventManager.prototype.dispatchJoystickMove = function (joystick) {
         this._onJoystickMove.dispatch(joystick);
     };
@@ -66,8 +66,8 @@ var EventManager = /** @class */ (function () {
     EventManager.prototype.dispatchJoystickLeft = function (joystick) {
         this._onMoveLeft.dispatch(joystick);
     };
-    EventManager.prototype.dispatchNewClient = function (clientID) {
-        this._onNewClient.dispatch(clientID);
+    EventManager.prototype.dispatchNewClient = function (userClient) {
+        this._onNewClient.dispatch(userClient);
     };
     return EventManager;
 }());
