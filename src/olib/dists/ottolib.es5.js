@@ -11323,7 +11323,7 @@ var Direction;
 })(Direction || (Direction = {}));
 var Joystick = /** @class */ (function () {
     function Joystick(angle, distance) {
-        this._angle = 0;
+        this._angle = angle;
         this._distance = distance;
     }
     Joystick.prototype.update = function (radius, distance) {

@@ -24,7 +24,7 @@ export default class SpielScreen extends Phaser.State {
 
     public create(): void {
         this.ottoLib = new OttoLib('1234');
-        this.ottoLib.start('2345');
+        this.ottoLib.start('1234');
         this.ottoLib.newUserJoined.subscribe(user => {
             console.log('vghjcvghnvghcghcghvfghxcghcghcxgfhchgcghcghchgcfgc');
             console.log(user);
