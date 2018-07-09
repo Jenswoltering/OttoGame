@@ -31,30 +31,29 @@ export default class SpielScreen extends Phaser.State {
         });
         this.ottoLib.onJoystickMove.subscribe(j => {
 
-            /* var joy = -90 // 0 -> 180    -180 <- 0
-            if (joy<0){
-                joy = 360 + joy
+            let joy = j._angle; // 0 -> 180    -180 <- 0
+            if (joy < 0) {
+                joy = 360 + joy;
             }
 
-            var schild = -1
-            if (schild<0){
-                schild = 360 + schild
+            let schild =  this.schild2.body.angle;
+            if (schild < 0) {
+                schild = 360 + schild;
             }
-            schild = schild + 90
-            if (schild > 360){
-                schild = schild - 360
+            schild = schild + 90;
+            if (schild > 360) {
+                schild = schild - 360;
             }
 
 
-            if ((joy - schild + 360) % 360 < 180){
+            if ((joy - schild + 360) % 360 < 180) {
                 // clockwise
-                clock = true
-            }else{
-                clock = false
-            } */
+                this.schild2.body.rotation += 0.1;
+            } else {
+                this.schild2.body.rotation -= 0.1;
+            }
 
-            console.log('move move');
-            this.schild2.body.rotation += 0.1;
+            // this.schild2.body.rotation += 0.1;
             // else {
             //     this.steuerung.down.isDown = false;
             // }
