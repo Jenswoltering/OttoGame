@@ -9,11 +9,9 @@ var Direction;
     Direction[Direction["Right"] = 4] = "Right";
 })(Direction || (Direction = {}));
 var Joystick = /** @class */ (function () {
-    function Joystick(id) {
-        this.id = id;
-        this._polarX = 0;
-        this._polarY = 0;
-        this._direction = Direction.No;
+    function Joystick(angle, distance) {
+        this._angle = 0;
+        this._distance = distance;
     }
     Joystick.prototype.update = function (radius, distance) {
         // do something

@@ -11322,11 +11322,9 @@ var Direction;
     Direction[Direction["Right"] = 4] = "Right";
 })(Direction || (Direction = {}));
 var Joystick = /** @class */ (function () {
-    function Joystick(id) {
-        this.id = id;
-        this._polarX = 0;
-        this._polarY = 0;
-        this._direction = Direction.No;
+    function Joystick(angle, distance) {
+        this._angle = 0;
+        this._distance = distance;
     }
     Joystick.prototype.update = function (radius, distance) {
         // do something
@@ -11335,8 +11333,8 @@ var Joystick = /** @class */ (function () {
 }());
 
 var UserClient = /** @class */ (function () {
-    function UserClient(socket) {
-        this.id = socket.id;
+    function UserClient(id) {
+        this.id = id;
     }
     return UserClient;
 }());
@@ -11353,15 +11351,14 @@ var Connection = /** @class */ (function () {
         this.listen(this._socket);
     };
     Connection.prototype.listen = function (socket) {
-        var _this = this;
-        var joystick = new Joystick(1);
         var self = this;
-        socket.on("newUser", function (userSocket) {
-            var user = new UserClient(userSocket);
+        socket.on("newUser", function (userId) {
+            var user = new UserClient(userId);
             self._connectionManger.eventmanager.dispatchNewClient(user);
         });
-        socket.on("jsm", function (data) {
-            return _this._connectionManger.eventmanager.dispatchJoystickMove(joystick);
+        socket.on("jsm", function (joystickData) {
+            var joystick = new Joystick(Number(joystickData.sAngle), Number(joystickData.sDistance));
+            self._connectionManger.eventmanager.dispatchJoystickMove(joystick);
         });
         socket.on("jss", function (data) { return console.log(data); });
     };

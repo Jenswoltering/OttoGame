@@ -14,15 +14,14 @@ var Connection = /** @class */ (function () {
         this.listen(this._socket);
     };
     Connection.prototype.listen = function (socket) {
-        var _this = this;
-        var joystick = new models_1.Joystick(1);
         var self = this;
-        socket.on("newUser", function (userSocket) {
-            var user = new models_1.UserClient(userSocket);
+        socket.on("newUser", function (userId) {
+            var user = new models_1.UserClient(userId);
             self._connectionManger.eventmanager.dispatchNewClient(user);
         });
-        socket.on("jsm", function (data) {
-            return _this._connectionManger.eventmanager.dispatchJoystickMove(joystick);
+        socket.on("jsm", function (joystickData) {
+            var joystick = new models_1.Joystick(Number(joystickData.sAngle), Number(joystickData.sDistance));
+            self._connectionManger.eventmanager.dispatchJoystickMove(joystick);
         });
         socket.on("jss", function (data) { return console.log(data); });
     };
