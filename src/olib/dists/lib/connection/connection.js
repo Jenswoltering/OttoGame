@@ -17,8 +17,8 @@ var Connection = /** @class */ (function () {
         var _this = this;
         var joystick = new models_1.Joystick(1);
         var self = this;
-        socket.on("newUser", function () {
-            var user = new models_1.UserClient(socket);
+        socket.on("newUser", function (userSocket) {
+            var user = new models_1.UserClient(userSocket);
             self._connectionManger.eventmanager.dispatchNewClient(user);
         });
         socket.on("jsm", function (data) {

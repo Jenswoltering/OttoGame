@@ -23,13 +23,36 @@ export default class SpielScreen extends Phaser.State {
     public button;
 
     public create(): void {
-        this.ottoLib = new OttoLib('2345');
+        this.ottoLib = new OttoLib('12345');
         this.ottoLib.start('2345');
         this.ottoLib.newUserJoined.subscribe(user => {
             console.log('vghjcvghnvghcghcghvfghxcghcghcxgfhchgcghcghchgcfgc');
             console.log(user);
         });
         this.ottoLib.onJoystickMove.subscribe(j => {
+
+            /* var joy = -90 // 0 -> 180    -180 <- 0
+            if (joy<0){
+                joy = 360 + joy
+            }
+
+            var schild = -1
+            if (schild<0){
+                schild = 360 + schild
+            }
+            schild = schild + 90
+            if (schild > 360){
+                schild = schild - 360
+            }
+
+
+            if ((joy - schild + 360) % 360 < 180){
+                // clockwise
+                clock = true
+            }else{
+                clock = false
+            } */
+
             console.log('move move');
             this.schild2.body.rotation += 0.1;
             // else {
