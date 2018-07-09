@@ -12358,6 +12358,7 @@ var OttoLib = /** @class */ (function () {
     OttoLib.prototype.initEvent = function () {
         // add more Events hier
         this.onJoystickMove = this.eventManager.onJoystickMove;
+        this.newUserJoined = this.eventManager.onNewClient;
     };
     return OttoLib;
 }());
